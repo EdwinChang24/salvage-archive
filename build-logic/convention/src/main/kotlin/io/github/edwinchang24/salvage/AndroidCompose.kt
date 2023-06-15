@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 package io.github.edwinchang24.salvage
 
 import com.android.build.api.dsl.CommonExtension
