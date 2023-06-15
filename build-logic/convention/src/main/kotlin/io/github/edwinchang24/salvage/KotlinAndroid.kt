@@ -13,7 +13,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 const val CompileSdk = 33
 const val MinSdk = 24
-val JAVA_VERSION = JavaVersion.VERSION_11
+val JAVA_VERSION = JavaVersion.VERSION_17
 
 internal fun Project.configureKotlinAndroid(commonExtension: CommonExtension<*, *, *, *, *>) = with(commonExtension) {
     compileSdk = CompileSdk

@@ -23,7 +23,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
         }
         configurations.configureEach {
             resolutionStrategy {
-                force(libs.findLibrary("junit4").get())
+                force(libs.findLibrary("junit").get())
             }
         }
         dependencies {

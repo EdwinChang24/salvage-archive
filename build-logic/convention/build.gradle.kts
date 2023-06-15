@@ -6,8 +6,8 @@ plugins {
 group = "io.github.edwinchang24.salvage.build-logic"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 gradlePlugin {
@@ -28,9 +28,17 @@ gradlePlugin {
             id = "salvage.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("androidRoom") {
+            id = "salvage.android.room"
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
         register("androidTest") {
             id = "salvage.android.test"
             implementationClass = "AndroidTestConventionPlugin"
+        }
+        register("jvmLibrary") {
+            id = "salvage.jvm.library"
+            implementationClass = "JvmLibraryConventionPlugin"
         }
     }
 }
@@ -39,4 +47,5 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.detekt.gradlePlugin)
+    compileOnly(libs.ksp.gradlePlugin)
 }

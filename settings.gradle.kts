@@ -18,3 +18,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Salvage"
 include(":app")
+
+include(":core:database")
+include(":core:model")
