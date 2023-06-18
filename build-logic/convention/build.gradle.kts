@@ -20,6 +20,10 @@ gradlePlugin {
             id = "salvage.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        register("androidHilt") {
+            id = "salvage.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
         register("androidLibraryCompose") {
             id = "salvage.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"

@@ -1,8 +1,8 @@
 import com.android.build.gradle.LibraryExtension
 import io.github.edwinchang24.salvage.CompileSdk
-import io.github.edwinchang24.salvage.libs
 import io.github.edwinchang24.salvage.configureKotlinAndroid
 import io.github.edwinchang24.salvage.findPluginId
+import io.github.edwinchang24.salvage.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -26,8 +26,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             }
         }
         dependencies {
-            add("androidTestImplementation", kotlin("test"))
-            add("testImplementation", kotlin("test"))
+            "androidTestImplementation"(kotlin("test"))
+            "testImplementation"(kotlin("test"))
         }
     }
 }
