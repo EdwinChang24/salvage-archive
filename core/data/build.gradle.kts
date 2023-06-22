@@ -16,6 +16,6 @@ dependencies {
     implementation(project(":core:model"))
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
-    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }

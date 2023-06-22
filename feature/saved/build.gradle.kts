@@ -1,19 +1,19 @@
 plugins {
-    id("salvage.android.library")
-    id("salvage.android.room")
-    id("salvage.android.hilt")
+    id("salvage.android.feature")
+    id("salvage.android.library.compose")
 }
 
 android {
-    namespace = "io.github.edwinchang24.salvage.database"
+    namespace = "io.github.edwinchang24.salvage.saved"
+
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
 dependencies {
-    implementation(project(":core:model"))
-    implementation(libs.kotlinx.datetime)
+    implementation(libs.core.ktx)
+    testImplementation(libs.junit)
     androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }

@@ -20,6 +20,10 @@ gradlePlugin {
             id = "salvage.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        register("androidFeature") {
+            id = "salvage.android.feature"
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
         register("androidHilt") {
             id = "salvage.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
