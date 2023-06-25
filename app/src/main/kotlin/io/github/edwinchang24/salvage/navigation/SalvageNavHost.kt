@@ -10,7 +10,11 @@ import io.github.edwinchang24.salvage.saved.navigation.savedScreen
 @Composable
 fun SalvageNavHost(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = SavedScreenNavigationRoute, modifier = modifier) {
+    NavHost(
+        navController = navController,
+        startDestination = SavedScreenNavigationRoute,
+        modifier = modifier
+    ) {
         savedScreen()
     }
 }
