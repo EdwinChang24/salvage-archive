@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.edwinchang24.salvage.saved"
+    namespace = "io.github.edwinchang24.salvage.feature.saved"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

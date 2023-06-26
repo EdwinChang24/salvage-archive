@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".sharetarget.ShareTargetActivity"
+            android:name=".feature.sharetarget.ShareTargetActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

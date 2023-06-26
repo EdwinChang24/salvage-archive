@@ -10,7 +10,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import io.github.edwinchang24.salvage.design.SalvageTheme
+import io.github.edwinchang24.salvage.core.design.SalvageTheme
 import io.github.edwinchang24.salvage.navigation.SalvageNavHost
 
 @OptIn(ExperimentalMaterial3Api::class)

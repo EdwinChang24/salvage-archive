@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.edwinchang24.salvage.sharetarget"
+    namespace = "io.github.edwinchang24.salvage.feature.sharetarget"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
