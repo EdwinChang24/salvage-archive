@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:design"))
     implementation(project(":feature:saved"))
     implementation(project(":feature:sharetarget"))
     implementation(libs.core.ktx)

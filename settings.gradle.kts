@@ -21,6 +21,7 @@ include(":app")
 
 include(":core:data")
 include(":core:database")
+include(":core:design")
 include(":core:model")
 include(":core:ui")
 

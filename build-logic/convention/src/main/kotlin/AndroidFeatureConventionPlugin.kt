@@ -11,6 +11,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
         pluginManager.apply("salvage.android.hilt")
         dependencies {
             "implementation"(project(":core:data"))
+            "implementation"(project(":core:design"))
             "implementation"(project(":core:model"))
             "implementation"(project(":core:ui"))
             "testImplementation"(kotlin("test"))
