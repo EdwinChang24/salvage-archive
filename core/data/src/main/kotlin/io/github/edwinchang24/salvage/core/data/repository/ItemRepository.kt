@@ -7,4 +7,5 @@ interface ItemRepository {
     fun getItem(id: String): Flow<Item>
     fun getItems(): Flow<List<Item>>
     suspend fun addItem(item: Item)
+    suspend fun deleteItem(item: Item)
 }

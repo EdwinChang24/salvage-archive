@@ -1,4 +1,4 @@
-package io.github.edwinchang24.salvage.core.ui
+package io.github.edwinchang24.salvage.core.ui.items
 
 import io.github.edwinchang24.salvage.core.model.Item
 

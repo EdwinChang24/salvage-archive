@@ -13,10 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.edwinchang24.salvage.core.model.Item
 import io.github.edwinchang24.salvage.core.design.SalvageTheme
+import io.github.edwinchang24.salvage.core.model.Item
 import kotlinx.datetime.Clock
 import java.util.UUID
 
@@ -25,6 +26,7 @@ class ShareTargetActivity : ComponentActivity() {
     private val viewModel: ShareTargetActivityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         val sharedUrl = intent.extras?.getString(Intent.EXTRA_TEXT)
         if (sharedUrl != null) viewModel.onUrlChanged(sharedUrl)
         setContent {
