@@ -1,6 +1,6 @@
 [versions]
 activity-compose = "1.7.2"
-agp = "8.2.0-alpha09"
+agp = "8.2.0-alpha10"
 android-desugar-jdk-libs = "2.0.3"
 compose-bom = "2023.06.00"
 compose-compiler = "1.4.7"
