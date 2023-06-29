@@ -1,20 +1,24 @@
 package io.github.edwinchang24.salvage.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import io.github.edwinchang24.salvage.feature.saved.navigation.SavedScreenNavigationRoute
-import io.github.edwinchang24.salvage.feature.saved.navigation.savedScreen
+import io.github.edwinchang24.salvage.feature.newitem.navigation.newItemScreen
 
 @Composable
 fun SalvageNavHost(modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
+    val rootNavController = rememberNavController()
     NavHost(
-        navController = navController,
-        startDestination = SavedScreenNavigationRoute,
+        navController = rootNavController,
+        startDestination = MainContentRoute,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
         modifier = modifier
     ) {
-        savedScreen()
+        mainContent(rootNavController = rootNavController)
+        newItemScreen(onFinish = rootNavController::popBackStack)
     }
 }

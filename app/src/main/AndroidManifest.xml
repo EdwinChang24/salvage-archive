@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".feature.sharetarget.ShareTargetActivity"
+            android:name=".feature.newitem.sharetarget.ShareTargetActivity"
             android:exported="true"
             android:theme="@style/Theme.Salvage"
             android:windowSoftInputMode="adjustResize">

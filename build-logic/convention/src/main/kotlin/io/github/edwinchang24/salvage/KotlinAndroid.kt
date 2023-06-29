@@ -8,7 +8,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-const val CompileSdk = 33
+const val CompileSdk = 34
 const val MinSdk = 24
 val JAVA_VERSION = JavaVersion.VERSION_17
 

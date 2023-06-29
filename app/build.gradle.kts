@@ -30,7 +30,7 @@ dependencies {
     implementation(project(":core:design"))
     implementation(project(":core:ui"))
     implementation(project(":feature:saved"))
-    implementation(project(":feature:sharetarget"))
+    implementation(project(":feature:newitem"))
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
