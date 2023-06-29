@@ -21,19 +21,21 @@ import kotlin.random.Random
 
 @Composable
 fun ItemSheet(item: Item, onDeleteItem: () -> Unit, onDismissBottomSheet: () -> Unit) {
-    Column(modifier = Modifier.padding(10.dp)) {
-        Text(item.name ?: "Unnamed", style = MaterialTheme.typography.titleMedium)
-        Text(item.url, style = MaterialTheme.typography.bodyMedium)
+    Column {
+        Column(modifier = Modifier.padding(10.dp)) {
+            Text(item.name ?: "Unnamed", style = MaterialTheme.typography.titleMedium)
+            Text(item.url, style = MaterialTheme.typography.bodyMedium)
+        }
+        Divider()
+        ListItem(
+            headlineContent = { Text("Delete") },
+            leadingContent = { Icon(Icons.Default.DeleteForever, contentDescription = "Delete") },
+            modifier = Modifier.clickable(onClick = {
+                onDeleteItem()
+                onDismissBottomSheet()
+            })
+        )
     }
-    Divider()
-    ListItem(
-        headlineContent = { Text("Delete") },
-        leadingContent = { Icon(Icons.Default.DeleteForever, contentDescription = "Delete") },
-        modifier = Modifier.clickable(onClick = {
-            onDeleteItem()
-            onDismissBottomSheet()
-        })
-    )
 }
 
 @Preview
@@ -41,20 +43,18 @@ fun ItemSheet(item: Item, onDeleteItem: () -> Unit, onDismissBottomSheet: () -> 
 private fun ItemSheetPreview() {
     MaterialTheme {
         Surface {
-            Column {
-                ItemSheet(
-                    item = Item(
-                        id = "abcde",
-                        name = "Article Title",
-                        url = "https://example.com",
-                        description = null,
-                        timeAdded = Instant.fromEpochSeconds(Random.nextLong()),
-                        timePublished = Instant.fromEpochSeconds(Random.nextLong())
-                    ),
-                    onDeleteItem = {},
-                    onDismissBottomSheet = {}
-                )
-            }
+            ItemSheet(
+                item = Item(
+                    id = "abcde",
+                    name = "Article Title",
+                    url = "https://example.com",
+                    description = null,
+                    timeAdded = Instant.fromEpochSeconds(Random.nextLong()),
+                    timePublished = Instant.fromEpochSeconds(Random.nextLong())
+                ),
+                onDeleteItem = {},
+                onDismissBottomSheet = {}
+            )
         }
     }
 }

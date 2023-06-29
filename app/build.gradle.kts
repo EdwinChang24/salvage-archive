@@ -32,6 +32,7 @@ dependencies {
     implementation(project(":feature:saved"))
     implementation(project(":feature:newitem"))
     implementation(libs.core.ktx)
+    implementation(libs.core.splashscreen)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))

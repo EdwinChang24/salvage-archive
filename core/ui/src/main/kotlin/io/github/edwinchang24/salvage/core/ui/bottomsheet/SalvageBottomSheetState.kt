@@ -1,6 +1,5 @@
 package io.github.edwinchang24.salvage.core.ui.bottomsheet
 
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
@@ -16,10 +15,10 @@ class SalvageBottomSheetState @OptIn(ExperimentalMaterial3Api::class) constructo
 
     var bottomSheetShown by mutableStateOf(false)
 
-    var bottomSheetContent: @Composable ColumnScope.() -> Unit = {}
+    var bottomSheetContent: @Composable () -> Unit = {}
         private set
 
-    fun showBottomSheet(content: @Composable (ColumnScope.() -> Unit)) {
+    fun showBottomSheet(content: @Composable () -> Unit) {
         bottomSheetContent = content
         bottomSheetShown = true
     }
