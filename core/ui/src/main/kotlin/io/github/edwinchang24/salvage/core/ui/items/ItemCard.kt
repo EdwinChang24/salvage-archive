@@ -20,12 +20,12 @@ import kotlin.random.Random
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ItemCard(item: Item, onItemLongClick: () -> Unit) {
+fun ItemCard(item: Item, onItemClick: () -> Unit, onItemLongClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .clip(CardDefaults.shape)
-            .combinedClickable(onLongClick = { onItemLongClick() }, onClick = {})
+            .combinedClickable(onClick = onItemClick, onLongClick = onItemLongClick)
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
             Text(text = item.name ?: "Unnamed", style = MaterialTheme.typography.titleLarge)
@@ -57,6 +57,7 @@ private fun ItemCardPreview() {
                     timeAdded = Instant.fromEpochSeconds(Random.nextLong()),
                     timePublished = Instant.fromEpochSeconds(Random.nextLong())
                 ),
+                onItemClick = {},
                 onItemLongClick = {}
             )
         }

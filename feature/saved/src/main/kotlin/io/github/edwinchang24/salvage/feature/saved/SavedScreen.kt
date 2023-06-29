@@ -1,20 +1,25 @@
 package io.github.edwinchang24.salvage.feature.saved
 
+import androidx.annotation.ColorInt
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.edwinchang24.salvage.core.ui.bottomsheet.ItemSheet
 import io.github.edwinchang24.salvage.core.ui.bottomsheet.LocalSalvageBottomSheetState
+import io.github.edwinchang24.salvage.core.ui.customtabs.launchCustomTab
 import io.github.edwinchang24.salvage.core.ui.items.ItemListUiState
 import io.github.edwinchang24.salvage.core.ui.items.itemList
 import kotlinx.coroutines.launch
@@ -24,6 +29,8 @@ fun SavedScreen(modifier: Modifier = Modifier, viewModel: SavedScreenViewModel =
     val listState by viewModel.listState.collectAsStateWithLifecycle()
     val bottomSheetState = LocalSalvageBottomSheetState.current
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    @ColorInt val backgroundColor = MaterialTheme.colorScheme.background.toArgb()
     if (listState is ItemListUiState.Success) {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(300.dp),
@@ -32,17 +39,19 @@ fun SavedScreen(modifier: Modifier = Modifier, viewModel: SavedScreenViewModel =
             verticalArrangement = Arrangement.spacedBy(24.dp),
             modifier = modifier.fillMaxSize()
         ) {
-            itemList(listState, onItemLongClick = { item ->
-                bottomSheetState.showBottomSheet {
-                    ItemSheet(
-                        item = item,
-                        onDeleteItem = { viewModel.deleteItem(item) },
-                        onDismissBottomSheet = {
-                            scope.launch { bottomSheetState.hideBottomSheet() }
-                        }
-                    )
+            itemList(
+                listState,
+                onItemClick = { item -> launchCustomTab(context, url = item.url, barColor = backgroundColor) },
+                onItemLongClick = { item ->
+                    bottomSheetState.showBottomSheet {
+                        ItemSheet(
+                            item = item,
+                            onDeleteItem = { viewModel.deleteItem(item) },
+                            onDismissBottomSheet = { scope.launch { bottomSheetState.hideBottomSheet() } }
+                        )
+                    }
                 }
-            })
+            )
         }
     } else {
         Text(text = "Loading...", modifier = modifier)

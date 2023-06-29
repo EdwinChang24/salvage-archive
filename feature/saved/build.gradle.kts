@@ -13,6 +13,7 @@ android {
 
 dependencies {
     implementation(libs.core.ktx)
+    implementation(libs.browser)
     testImplementation(libs.junit)
     androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -22,6 +22,8 @@ dependencies {
     api(libs.compose.ui.tooling.preview)
     api(libs.compose.ui.util)
     implementation(project(":core:model"))
+    implementation(libs.browser)
+    implementation(libs.core.ktx)
     implementation(libs.kotlinx.datetime)
     androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
