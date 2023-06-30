@@ -56,7 +56,9 @@ fun NewItemScreen(
                 }
             )
         },
-        bottomBar = { BottomBar(onFinish = onFinish, onDone = { viewModel.addItem(name, url, description) }) },
+        bottomBar = {
+            BottomBar(url = url, onFinish = onFinish, onDone = { viewModel.addItem(name, url, description) })
+        },
         modifier = modifier
     ) { contentPadding ->
         val scrollState = rememberScrollState()
@@ -106,10 +108,7 @@ private fun UrlField(url: String, onEditUrl: (String) -> Unit) {
 }
 
 @Composable
-private fun DescriptionField(
-    description: String,
-    onEditDescription: (String) -> Unit
-) {
+private fun DescriptionField(description: String, onEditDescription: (String) -> Unit) {
     OutlinedTextField(
         value = description,
         onValueChange = onEditDescription,
@@ -127,7 +126,7 @@ private fun DescriptionField(
 }
 
 @Composable
-private fun BottomBar(onFinish: () -> Unit, onDone: () -> Unit) {
+private fun BottomBar(url: String, onFinish: () -> Unit, onDone: () -> Unit) {
     BottomAppBar(contentPadding = PaddingValues(horizontal = 24.dp)) {
         TextButton(onClick = onFinish, modifier = Modifier.weight(1f)) {
             Text("Cancel")
@@ -135,9 +134,12 @@ private fun BottomBar(onFinish: () -> Unit, onDone: () -> Unit) {
         Spacer(modifier = Modifier.width(24.dp))
         Button(
             onClick = {
-                onDone()
-                onFinish()
+                if (url != "") {
+                    onDone()
+                    onFinish()
+                }
             },
+            enabled = url != "",
             modifier = Modifier.weight(1f)
         ) {
             Icon(Icons.Default.Done, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
