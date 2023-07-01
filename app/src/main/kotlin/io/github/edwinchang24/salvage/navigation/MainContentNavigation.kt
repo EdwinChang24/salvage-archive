@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import io.github.edwinchang24.salvage.feature.itemediting.edititem.navigateToEdit
 import io.github.edwinchang24.salvage.feature.saved.navigation.SavedScreenNavigationRoute
 import io.github.edwinchang24.salvage.feature.saved.navigation.savedScreen
 import io.github.edwinchang24.salvage.ui.MainContent
@@ -22,7 +23,7 @@ fun NavGraphBuilder.mainContent(rootNavController: NavController) {
                 startDestination = SavedScreenNavigationRoute,
                 modifier = Modifier.padding(contentPadding)
             ) {
-                savedScreen()
+                savedScreen(onEditItem = rootNavController::navigateToEdit)
             }
         }
     }

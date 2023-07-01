@@ -8,10 +8,14 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SalvageBottomSheetState @OptIn(ExperimentalMaterial3Api::class) constructor(val sheetState: SheetState) {
+class SalvageBottomSheetState @OptIn(ExperimentalMaterial3Api::class) constructor(
+    val sheetState: SheetState,
+    private val coroutineScope: CoroutineScope
+) {
 
     var bottomSheetShown by mutableStateOf(false)
 
@@ -24,12 +28,10 @@ class SalvageBottomSheetState @OptIn(ExperimentalMaterial3Api::class) constructo
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
-    suspend fun hideBottomSheet() {
-        coroutineScope {
-            launch {
-                sheetState.hide()
-                bottomSheetShown = false
-            }
+    fun hideBottomSheet() {
+        coroutineScope.launch(Dispatchers.Default) {
+            sheetState.hide()
+            bottomSheetShown = false
         }
     }
 }

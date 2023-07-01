@@ -26,4 +26,4 @@ include(":core:model")
 include(":core:ui")
 
 include(":feature:saved")
-include(":feature:newitem")
+include(":feature:item-editing")

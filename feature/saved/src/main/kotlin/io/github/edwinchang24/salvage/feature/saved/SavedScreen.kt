@@ -10,7 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -22,13 +21,15 @@ import io.github.edwinchang24.salvage.core.ui.bottomsheet.LocalSalvageBottomShee
 import io.github.edwinchang24.salvage.core.ui.customtabs.launchCustomTab
 import io.github.edwinchang24.salvage.core.ui.items.ItemListUiState
 import io.github.edwinchang24.salvage.core.ui.items.itemList
-import kotlinx.coroutines.launch
 
 @Composable
-fun SavedScreen(modifier: Modifier = Modifier, viewModel: SavedScreenViewModel = hiltViewModel()) {
+fun SavedScreen(
+    onEditItem: (itemId: String) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SavedScreenViewModel = hiltViewModel()
+) {
     val listState by viewModel.listState.collectAsStateWithLifecycle()
     val bottomSheetState = LocalSalvageBottomSheetState.current
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
     @ColorInt val backgroundColor = MaterialTheme.colorScheme.background.toArgb()
     if (listState is ItemListUiState.Success) {
@@ -46,8 +47,9 @@ fun SavedScreen(modifier: Modifier = Modifier, viewModel: SavedScreenViewModel =
                     bottomSheetState.showBottomSheet {
                         ItemSheet(
                             item = item,
+                            onEditItem = onEditItem,
                             onDeleteItem = { viewModel.deleteItem(item) },
-                            onDismissBottomSheet = { scope.launch { bottomSheetState.hideBottomSheet() } }
+                            onDismissBottomSheet = bottomSheetState::hideBottomSheet
                         )
                     }
                 }

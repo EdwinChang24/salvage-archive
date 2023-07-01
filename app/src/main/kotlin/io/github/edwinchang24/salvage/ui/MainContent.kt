@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import io.github.edwinchang24.salvage.feature.newitem.navigation.NewItemScreenNavigationRoute
+import io.github.edwinchang24.salvage.feature.itemediting.newitem.navigateToNewItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -19,7 +19,7 @@ fun MainContent(rootNavController: NavController, content: @Composable (contentP
     Scaffold(
         topBar = { TopAppBar(title = { Text(text = "Salvage") }) },
         floatingActionButton = {
-            FloatingActionButton(onClick = { rootNavController.navigate(NewItemScreenNavigationRoute) }) {
+            FloatingActionButton(onClick = rootNavController::navigateToNewItem) {
                 Icon(Icons.Default.Add, contentDescription = "New item")
             }
         },

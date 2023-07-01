@@ -9,6 +9,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import io.github.edwinchang24.salvage.core.design.SalvageTheme
 import io.github.edwinchang24.salvage.core.ui.bottomsheet.LocalSalvageBottomSheetState
@@ -18,7 +19,8 @@ import io.github.edwinchang24.salvage.navigation.SalvageNavHost
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
-    val bottomSheetState = SalvageBottomSheetState(rememberModalBottomSheetState())
+    val bottomSheetState =
+        SalvageBottomSheetState(rememberModalBottomSheetState(), rememberCoroutineScope())
     CompositionLocalProvider(LocalSalvageBottomSheetState provides bottomSheetState) {
         SalvageTheme {
             SalvageNavHost()

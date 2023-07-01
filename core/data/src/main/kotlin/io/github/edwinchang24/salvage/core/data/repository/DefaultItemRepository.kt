@@ -16,4 +16,6 @@ class DefaultItemRepository @Inject constructor(private val itemDao: ItemDao) : 
     override suspend fun addItem(item: Item) = itemDao.insertAll(item.asEntity())
 
     override suspend fun deleteItem(item: Item) = itemDao.delete(item.asEntity())
+
+    override suspend fun updateItem(item: Item) = itemDao.update(item.asEntity())
 }

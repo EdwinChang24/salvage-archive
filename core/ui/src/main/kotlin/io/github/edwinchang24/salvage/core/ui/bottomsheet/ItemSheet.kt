@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DeleteForever
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -25,7 +26,12 @@ import kotlinx.datetime.Instant
 import kotlin.random.Random
 
 @Composable
-fun ItemSheet(item: Item, onDeleteItem: () -> Unit, onDismissBottomSheet: () -> Unit) {
+fun ItemSheet(
+    item: Item,
+    onEditItem: (itemId: String) -> Unit,
+    onDeleteItem: () -> Unit,
+    onDismissBottomSheet: () -> Unit
+) {
     Column {
         val context = LocalContext.current
         @ColorInt val backgroundColor = MaterialTheme.colorScheme.background.toArgb()
@@ -40,6 +46,16 @@ fun ItemSheet(item: Item, onDeleteItem: () -> Unit, onDismissBottomSheet: () -> 
             modifier = Modifier.clickable(
                 onClick = {
                     launchCustomTab(context, url = item.url, barColor = backgroundColor)
+                    onDismissBottomSheet()
+                }
+            )
+        )
+        ListItem(
+            headlineContent = { Text("Edit") },
+            leadingContent = { Icon(Icons.Default.Edit, contentDescription = "Edit") },
+            modifier = Modifier.clickable(
+                onClick = {
+                    onEditItem(item.id)
                     onDismissBottomSheet()
                 }
             )
@@ -71,6 +87,7 @@ private fun ItemSheetPreview() {
                     timeAdded = Instant.fromEpochSeconds(Random.nextLong()),
                     timePublished = Instant.fromEpochSeconds(Random.nextLong())
                 ),
+                onEditItem = {},
                 onDeleteItem = {},
                 onDismissBottomSheet = {}
             )

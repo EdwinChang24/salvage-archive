@@ -30,7 +30,7 @@ dependencies {
     implementation(project(":core:design"))
     implementation(project(":core:ui"))
     implementation(project(":feature:saved"))
-    implementation(project(":feature:newitem"))
+    implementation(project(":feature:item-editing"))
     implementation(libs.core.ktx)
     implementation(libs.core.splashscreen)
     implementation(libs.lifecycle.runtime.ktx)

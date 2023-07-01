@@ -6,8 +6,8 @@ import io.github.edwinchang24.salvage.feature.saved.SavedScreen
 
 const val SavedScreenNavigationRoute = "saved"
 
-fun NavGraphBuilder.savedScreen() {
+fun NavGraphBuilder.savedScreen(onEditItem: (itemId: String) -> Unit) {
     composable(SavedScreenNavigationRoute) {
-        SavedScreen()
+        SavedScreen(onEditItem = onEditItem)
     }
 }

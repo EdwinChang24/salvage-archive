@@ -6,7 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import io.github.edwinchang24.salvage.feature.newitem.navigation.newItemScreen
+import io.github.edwinchang24.salvage.feature.itemediting.edititem.editItemScreen
+import io.github.edwinchang24.salvage.feature.itemediting.newitem.newItemScreen
 
 @Composable
 fun SalvageNavHost(modifier: Modifier = Modifier) {
@@ -20,5 +21,6 @@ fun SalvageNavHost(modifier: Modifier = Modifier) {
     ) {
         mainContent(rootNavController = rootNavController)
         newItemScreen(onFinish = rootNavController::popBackStack)
+        editItemScreen(onFinish = rootNavController::popBackStack)
     }
 }
