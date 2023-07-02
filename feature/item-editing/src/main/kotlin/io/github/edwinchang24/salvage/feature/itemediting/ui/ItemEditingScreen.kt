@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -29,6 +30,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -94,6 +98,10 @@ private fun NameField(name: String, onEditName: (String) -> Unit) {
             }
         },
         singleLine = true,
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.Words,
+            imeAction = ImeAction.Next
+        ),
         modifier = Modifier.fillMaxWidth()
     )
 }
@@ -107,6 +115,11 @@ private fun UrlField(url: String, onEditUrl: (String) -> Unit) {
         leadingIcon = { Icon(Icons.Default.Link, contentDescription = null) },
         supportingText = { Text("*required") },
         isError = url == "",
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            keyboardType = KeyboardType.Uri,
+            imeAction = ImeAction.Next
+        ),
         modifier = Modifier.fillMaxWidth()
     )
 }
@@ -125,6 +138,10 @@ private fun DescriptionField(description: String, onEditDescription: (String) ->
             }
         },
         minLines = 3,
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.Sentences,
+            imeAction = ImeAction.Done
+        ),
         modifier = Modifier.fillMaxWidth()
     )
 }
