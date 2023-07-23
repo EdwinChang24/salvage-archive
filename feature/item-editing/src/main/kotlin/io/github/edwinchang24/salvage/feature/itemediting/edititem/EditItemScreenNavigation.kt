@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import io.github.edwinchang24.salvage.feature.itemediting.ui.ItemEditingScreen
+import io.github.edwinchang24.salvage.feature.itemediting.ui.ItemEditingRoute
 
 const val EditItemScreenNavigationRoute = "edititem"
 const val ItemId = "itemId"
@@ -17,6 +17,6 @@ fun NavGraphBuilder.editItemScreen(onFinish: () -> Unit) {
         route = "$EditItemScreenNavigationRoute/{$ItemId}",
         arguments = listOf(navArgument(ItemId) { type = NavType.StringType })
     ) {
-        ItemEditingScreen(onFinish = onFinish)
+        ItemEditingRoute(onFinish = onFinish)
     }
 }

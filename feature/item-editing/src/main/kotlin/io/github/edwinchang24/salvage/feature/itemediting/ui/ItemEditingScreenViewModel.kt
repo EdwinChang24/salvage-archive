@@ -51,7 +51,6 @@ class ItemEditingScreenViewModel @Inject constructor(
         savedStateHandle[Description] = description
     }
 
-
     fun submitItem() {
         viewModelScope.launch(Dispatchers.IO) {
             if (existingItemId == null) {

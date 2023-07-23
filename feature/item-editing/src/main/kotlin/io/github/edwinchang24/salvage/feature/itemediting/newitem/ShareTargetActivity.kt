@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.edwinchang24.salvage.core.design.SalvageTheme
-import io.github.edwinchang24.salvage.feature.itemediting.ui.ItemEditingScreen
+import io.github.edwinchang24.salvage.feature.itemediting.ui.ItemEditingRoute
 import io.github.edwinchang24.salvage.feature.itemediting.ui.ItemEditingScreenViewModel
 
 @AndroidEntryPoint
@@ -23,7 +23,7 @@ class ShareTargetActivity : ComponentActivity() {
         if (sharedUrl != null) itemEditingScreenViewModel.onEditUrl(sharedUrl)
         setContent {
             SalvageTheme {
-                ItemEditingScreen(onFinish = { finish() }, viewModel = itemEditingScreenViewModel)
+                ItemEditingRoute(onFinish = { finish() }, viewModel = itemEditingScreenViewModel)
             }
         }
     }

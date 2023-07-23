@@ -29,6 +29,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -36,10 +38,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.github.edwinchang24.salvage.core.design.SalvageTheme
+import io.github.edwinchang24.salvage.core.preview.annotations.AllPreviews
+import io.github.edwinchang24.salvage.core.util.GetterSetter
+import io.github.edwinchang24.salvage.core.util.unaryPlus
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemEditingScreen(
+fun ItemEditingRoute(
     onFinish: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ItemEditingScreenViewModel = hiltViewModel()
@@ -47,11 +52,32 @@ fun ItemEditingScreen(
     val name by viewModel.name.collectAsStateWithLifecycle()
     val url by viewModel.url.collectAsStateWithLifecycle()
     val description by viewModel.description.collectAsStateWithLifecycle()
+    ItemEditingScreen(
+        editingItem = viewModel.existingItemId != null,
+        name = GetterSetter(name, viewModel::onEditName),
+        url = GetterSetter(url, viewModel::onEditUrl),
+        description = GetterSetter(description, viewModel::onEditDescription),
+        onSubmitItem = viewModel::submitItem,
+        onFinish = onFinish,
+        modifier = modifier
+    )
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ItemEditingScreen(
+    editingItem: Boolean,
+    name: GetterSetter<String>,
+    url: GetterSetter<String>,
+    description: GetterSetter<String>,
+    onSubmitItem: () -> Unit,
+    onFinish: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (viewModel.existingItemId == null) "New Item" else "Edit Item") },
+                title = { Text(if (editingItem) "Edit Item" else "New Item") },
                 navigationIcon = {
                     IconButton(onClick = onFinish) { Icon(Icons.Default.ArrowBack, contentDescription = "Navigate up") }
                 }
@@ -59,9 +85,9 @@ fun ItemEditingScreen(
         },
         bottomBar = {
             BottomBar(
-                url = url,
+                url = url(),
                 onDone = {
-                    viewModel.submitItem()
+                    onSubmitItem()
                     onFinish()
                 },
                 onCancel = onFinish
@@ -77,22 +103,22 @@ fun ItemEditingScreen(
                 .padding(horizontal = 24.dp)
                 .verticalScroll(scrollState)
         ) {
-            NameField(name = name, onEditName = viewModel::onEditName)
-            UrlField(url = url, onEditUrl = viewModel::onEditUrl)
-            DescriptionField(description = description, onEditDescription = viewModel::onEditDescription)
+            NameField(name = name)
+            UrlField(url = url)
+            DescriptionField(description = description)
         }
     }
 }
 
 @Composable
-private fun NameField(name: String, onEditName: (String) -> Unit) {
+private fun NameField(name: GetterSetter<String>) {
     OutlinedTextField(
-        value = name,
-        onValueChange = onEditName,
+        value = name(),
+        onValueChange = name.setValue,
         label = { Text("Name") },
         trailingIcon = {
-            if (name != "") {
-                IconButton(onClick = { onEditName("") }) {
+            if (name() != "") {
+                IconButton(onClick = { name.setValue("") }) {
                     Icon(Icons.Default.Delete, contentDescription = "Clear name")
                 }
             }
@@ -107,14 +133,14 @@ private fun NameField(name: String, onEditName: (String) -> Unit) {
 }
 
 @Composable
-private fun UrlField(url: String, onEditUrl: (String) -> Unit) {
+private fun UrlField(url: GetterSetter<String>) {
     OutlinedTextField(
-        value = url,
-        onValueChange = onEditUrl,
+        value = url(),
+        onValueChange = url.setValue,
         label = { Text("URL*") },
         leadingIcon = { Icon(Icons.Default.Link, contentDescription = null) },
         supportingText = { Text("*required") },
-        isError = url == "",
+        isError = url() == "",
         keyboardOptions = KeyboardOptions(
             capitalization = KeyboardCapitalization.None,
             keyboardType = KeyboardType.Uri,
@@ -125,14 +151,14 @@ private fun UrlField(url: String, onEditUrl: (String) -> Unit) {
 }
 
 @Composable
-private fun DescriptionField(description: String, onEditDescription: (String) -> Unit) {
+private fun DescriptionField(description: GetterSetter<String>) {
     OutlinedTextField(
-        value = description,
-        onValueChange = onEditDescription,
+        value = description(),
+        onValueChange = description.setValue,
         label = { Text("Description") },
         trailingIcon = {
-            if (description != "") {
-                IconButton(onClick = { onEditDescription("") }) {
+            if (description.value != "") {
+                IconButton(onClick = { description.setValue("") }) {
                     Icon(Icons.Default.Delete, contentDescription = "Clear description")
                 }
             }
@@ -157,4 +183,17 @@ private fun BottomBar(url: String, onDone: () -> Unit, onCancel: () -> Unit) {
             Text("Done")
         }
     }
+}
+
+@AllPreviews
+@Composable
+private fun ItemEditingScreenPreview() = SalvageTheme {
+    ItemEditingScreen(
+        editingItem = true,
+        name = +remember { mutableStateOf("") },
+        url = +remember { mutableStateOf("") },
+        description = +remember { mutableStateOf("") },
+        onSubmitItem = {},
+        onFinish = {}
+    )
 }
