@@ -45,7 +45,7 @@ fun SavedRoute(
             bottomSheetState.showBottomSheet {
                 ItemSheet(
                     item = item,
-                    onEditItem = onEditItem,
+                    onEditItem = { onEditItem(item.id) },
                     onDeleteItem = { viewModel.deleteItem(item) },
                     onDismissBottomSheet = bottomSheetState::hideBottomSheet
                 )

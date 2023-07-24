@@ -28,7 +28,7 @@ import kotlin.random.Random
 @Composable
 fun ItemSheet(
     item: Item,
-    onEditItem: (itemId: String) -> Unit,
+    onEditItem: () -> Unit,
     onDeleteItem: () -> Unit,
     onDismissBottomSheet: () -> Unit
 ) {
@@ -55,7 +55,7 @@ fun ItemSheet(
             leadingContent = { Icon(Icons.Default.Edit, contentDescription = "Edit") },
             modifier = Modifier.clickable(
                 onClick = {
-                    onEditItem(item.id)
+                    onEditItem()
                     onDismissBottomSheet()
                 }
             )
