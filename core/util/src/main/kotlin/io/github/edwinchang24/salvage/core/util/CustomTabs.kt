@@ -1,4 +1,4 @@
-package io.github.edwinchang24.salvage.core.ui.customtabs
+package io.github.edwinchang24.salvage.core.util
 
 import android.content.Context
 import androidx.annotation.ColorInt

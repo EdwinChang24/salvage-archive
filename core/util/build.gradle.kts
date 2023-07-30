@@ -11,6 +11,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.browser)
     implementation(libs.core.ktx)
     implementation(libs.compose.runtime)
     testImplementation(libs.junit)

@@ -20,14 +20,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.edwinchang24.salvage.core.design.SalvageTheme
+import io.github.edwinchang24.salvage.core.menu.ItemMenuContent
 import io.github.edwinchang24.salvage.core.model.Item
 import io.github.edwinchang24.salvage.core.preview.ItemPreviewParameterProvider
 import io.github.edwinchang24.salvage.core.preview.annotations.AllPreviews
-import io.github.edwinchang24.salvage.core.ui.bottomsheet.ItemSheet
+import io.github.edwinchang24.salvage.core.ui.bottomsheet.BottomSheetContent
 import io.github.edwinchang24.salvage.core.ui.bottomsheet.LocalSalvageBottomSheetState
-import io.github.edwinchang24.salvage.core.ui.customtabs.launchCustomTab
 import io.github.edwinchang24.salvage.core.ui.items.ItemListUiState
 import io.github.edwinchang24.salvage.core.ui.items.itemList
+import io.github.edwinchang24.salvage.core.util.launchCustomTab
 
 @Composable
 fun SavedRoute(
@@ -43,11 +44,14 @@ fun SavedRoute(
         onItemClick = { item -> launchCustomTab(context, url = item.url, barColor = backgroundColor) },
         onItemLongClick = { item ->
             bottomSheetState.showBottomSheet {
-                ItemSheet(
-                    item = item,
-                    onEditItem = { onEditItem(item.id) },
-                    onDeleteItem = { viewModel.deleteItem(item) },
-                    onDismissBottomSheet = bottomSheetState::hideBottomSheet
+                BottomSheetContent(
+                    ItemMenuContent(
+                        context,
+                        item,
+                        onEditItem = { onEditItem(item.id) },
+                        onDeleteItem = { viewModel.deleteItem(item) },
+                        backgroundColor
+                    )
                 )
             }
         }, modifier = modifier,
