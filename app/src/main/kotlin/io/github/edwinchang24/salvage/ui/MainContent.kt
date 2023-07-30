@@ -19,7 +19,7 @@ import io.github.edwinchang24.salvage.feature.itemediting.newitem.navigateToNewI
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainContent(rootNavController: NavController, content: @Composable (contentPadding: PaddingValues) -> Unit) {
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
         topBar = {
             TopAppBar(
