@@ -14,6 +14,7 @@ dependencies {
     implementation(libs.browser)
     implementation(libs.core.ktx)
     implementation(libs.compose.runtime)
+    implementation(libs.kotlinx.datetime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

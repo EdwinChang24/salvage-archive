@@ -23,6 +23,7 @@ dependencies {
     api(libs.compose.ui.util)
     implementation(project(":core:menu"))
     implementation(project(":core:model"))
+    implementation(project(":core:util"))
     implementation(libs.core.ktx)
     implementation(libs.kotlinx.datetime)
     androidTestImplementation(libs.test.ext.junit)
