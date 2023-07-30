@@ -8,6 +8,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,10 +20,10 @@ class SalvageBottomSheetState @OptIn(ExperimentalMaterial3Api::class) constructo
 
     var bottomSheetShown by mutableStateOf(false)
 
-    var bottomSheetContent: @Composable () -> Unit = {}
+    var bottomSheetContent: @Composable (Modifier) -> Unit = {}
         private set
 
-    fun showBottomSheet(content: @Composable () -> Unit) {
+    fun showBottomSheet(content: @Composable (Modifier) -> Unit) {
         bottomSheetContent = content
         bottomSheetShown = true
     }

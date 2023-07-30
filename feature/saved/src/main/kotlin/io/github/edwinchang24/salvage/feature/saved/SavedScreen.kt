@@ -43,7 +43,7 @@ fun SavedRoute(
     SavedScreen(
         onItemClick = { item -> launchCustomTab(context, url = item.url, barColor = backgroundColor) },
         onItemLongClick = { item ->
-            bottomSheetState.showBottomSheet {
+            bottomSheetState.showBottomSheet { modifier ->
                 BottomSheetContent(
                     ItemMenuContent(
                         context,
@@ -51,7 +51,8 @@ fun SavedRoute(
                         onEditItem = { onEditItem(item.id) },
                         onDeleteItem = { viewModel.deleteItem(item) },
                         backgroundColor
-                    )
+                    ),
+                    modifier = modifier
                 )
             }
         }, modifier = modifier,

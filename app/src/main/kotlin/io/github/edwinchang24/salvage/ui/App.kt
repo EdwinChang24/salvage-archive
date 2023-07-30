@@ -1,6 +1,5 @@
 package io.github.edwinchang24.salvage.ui
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -30,8 +29,8 @@ fun App() {
                     sheetState = bottomSheetState.sheetState,
                     windowInsets = WindowInsets(0, 0, 0, 0)
                 ) {
-                    Box(modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)) {
-                        with(bottomSheetState) { bottomSheetContent() }
+                    with(bottomSheetState) {
+                        bottomSheetContent(Modifier.windowInsetsPadding(WindowInsets.navigationBars))
                     }
                 }
             }

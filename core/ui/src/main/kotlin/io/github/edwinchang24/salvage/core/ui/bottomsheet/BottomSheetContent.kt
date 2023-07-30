@@ -13,9 +13,9 @@ import androidx.compose.ui.unit.dp
 import io.github.edwinchang24.salvage.core.menu.MenuContent
 
 @Composable
-fun BottomSheetContent(menuContent: MenuContent) {
+fun BottomSheetContent(menuContent: MenuContent, modifier: Modifier = Modifier) {
     val bottomSheetState = LocalSalvageBottomSheetState.current
-    Column {
+    Column(modifier = modifier) {
         if (menuContent.extraContent != null) {
             menuContent.extraContent?.let { it(modifier = Modifier.padding(16.dp)) }
             Divider()
