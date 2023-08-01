@@ -1,10 +1,7 @@
 package io.github.edwinchang24.salvage.ui
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -17,9 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
-import io.github.edwinchang24.salvage.feature.itemediting.startNewItemActivity
 import io.github.edwinchang24.salvage.navigation.TopLevelDestination
-import io.github.edwinchang24.salvage.navigation.isSelected
+import io.github.edwinchang24.salvage.navigation.isInHierarchy
 import io.github.edwinchang24.salvage.navigation.navigateTo
 import io.github.edwinchang24.salvage.navigation.selectedTopLevelDestination
 
@@ -39,11 +35,11 @@ fun MainContent(navController: NavHostController, content: @Composable (contentP
             NavigationBar {
                 for (topLevelDestination in TopLevelDestination.entries) {
                     NavigationBarItem(
-                        selected = topLevelDestination.isSelected(navController),
+                        selected = topLevelDestination.isInHierarchy(navController),
                         onClick = { navController.navigateTo(topLevelDestination) },
                         icon = {
                             Icon(
-                                if (topLevelDestination.isSelected(navController)) topLevelDestination.selectedIcon
+                                if (topLevelDestination.isInHierarchy(navController)) topLevelDestination.selectedIcon
                                 else topLevelDestination.unselectedIcon, contentDescription = null
                             )
                         },
@@ -52,11 +48,7 @@ fun MainContent(navController: NavHostController, content: @Composable (contentP
                 }
             }
         },
-        floatingActionButton = {
-            FloatingActionButton(onClick = context::startNewItemActivity) {
-                Icon(Icons.Default.Add, contentDescription = "New item")
-            }
-        },
+        floatingActionButton = navController.selectedTopLevelDestination()?.fabContent?.let { { it(context) } } ?: {},
         content = content,
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     )
