@@ -10,4 +10,7 @@ import dagger.hilt.components.SingletonComponent
 object DaosModule {
     @Provides
     fun providesItemDao(database: SalvageDatabase) = database.itemDao()
+
+    @Provides
+    fun providesTagDao(database: SalvageDatabase) = database.tagDao()
 }

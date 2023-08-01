@@ -26,7 +26,7 @@
         <activity
             android:name=".feature.itemediting.newitem.ShareTargetActivity"
             android:exported="true"
-            android:theme="@style/Theme.Salvage.Splash"
+            android:theme="@style/Theme.Salvage"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
