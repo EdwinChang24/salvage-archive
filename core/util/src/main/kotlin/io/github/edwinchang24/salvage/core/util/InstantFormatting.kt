@@ -6,6 +6,6 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-fun Instant.formatted() = LocalDateTime.ofInstant(toJavaInstant(), ZoneId.systemDefault()).format(
+fun Instant.formatted(): String = LocalDateTime.ofInstant(toJavaInstant(), ZoneId.systemDefault()).format(
     DateTimeFormatter.ofPattern("M/d/y h:mm:ss a")
 )

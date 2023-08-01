@@ -14,6 +14,7 @@ android {
 dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:model"))
+    implementation(libs.core.ktx)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
     androidTestImplementation(libs.test.ext.junit)

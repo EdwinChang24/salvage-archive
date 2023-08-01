@@ -1,13 +1,6 @@
 package io.github.edwinchang24.salvage.core.data.model
 
-import io.github.edwinchang24.salvage.core.model.Item
 import io.github.edwinchang24.salvage.core.database.model.ItemEntity
+import io.github.edwinchang24.salvage.core.model.Item
 
-fun Item.asEntity() = ItemEntity(
-    id = id,
-    name = name,
-    url = url,
-    description = description,
-    timeAdded = timeAdded,
-    timePublished = timePublished
-)
+fun Item.asEntity() = ItemEntity(id, name, url, description, timeAdded, timePublished)

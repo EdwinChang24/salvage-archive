@@ -16,11 +16,4 @@ data class ItemEntity(
     val timePublished: Instant?
 )
 
-fun ItemEntity.asExternalModel() = Item(
-    id = id,
-    name = name,
-    url = url,
-    description = description,
-    timeAdded = timeAdded,
-    timePublished = timePublished
-)
+fun ItemEntity.asExternalModel() = Item(id, name, url, description, timeAdded, timePublished)

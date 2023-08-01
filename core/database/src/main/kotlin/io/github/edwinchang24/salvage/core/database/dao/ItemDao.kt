@@ -21,8 +21,8 @@ interface ItemDao {
 
     @Query(
         """
-        SELECT * from items
-        WHERE id = :id
+            SELECT * from items
+            WHERE id = :id
         """
     )
     fun getItemEntity(id: String): Flow<ItemEntity>
