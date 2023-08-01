@@ -1,4 +1,4 @@
-package io.github.edwinchang24.salvage.feature.itemediting.ui
+package io.github.edwinchang24.salvage.feature.itemediting
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -6,9 +6,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.edwinchang24.salvage.core.data.repository.ItemRepository
 import io.github.edwinchang24.salvage.core.model.Item
-import io.github.edwinchang24.salvage.feature.itemediting.edititem.ItemId
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import java.util.UUID
@@ -23,19 +24,19 @@ class ItemEditingScreenViewModel @Inject constructor(
     private val itemRepository: ItemRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    val existingItemId: String? = savedStateHandle[ItemId]
+
+    val existingItemId: StateFlow<String?> = savedStateHandle.getStateFlow(ExistingItemId, null)
     val name = savedStateHandle.getStateFlow(Name, "")
     val url = savedStateHandle.getStateFlow(Url, "")
     val description = savedStateHandle.getStateFlow(Description, "")
 
-    init {
-        if (existingItemId != null) {
-            viewModelScope.launch(Dispatchers.IO) {
-                val existingItem = itemRepository.getItem(existingItemId).first()
-                savedStateHandle[Name] = existingItem.name ?: ""
-                savedStateHandle[Url] = existingItem.url
-                savedStateHandle[Description] = existingItem.description ?: ""
-            }
+    fun setExistingItemId(id: String) {
+        savedStateHandle[ExistingItemId] = id
+        viewModelScope.launch(Dispatchers.IO) {
+            val existingItem = itemRepository.getItem(id).firstOrNull()
+            savedStateHandle[Name] = existingItem?.name ?: ""
+            savedStateHandle[Url] = existingItem?.url ?: ""
+            savedStateHandle[Description] = existingItem?.description ?: ""
         }
     }
 
@@ -51,24 +52,24 @@ class ItemEditingScreenViewModel @Inject constructor(
         savedStateHandle[Description] = description
     }
 
-    fun submitItem() {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (existingItemId == null) {
-                itemRepository.addItem(
-                    Item(
-                        id = UUID.randomUUID().toString(),
-                        name = if (name.value == "") null else name.value,
-                        url = url.value,
-                        description = if (description.value == "") null else description.value,
-                        timeAdded = Clock.System.now(),
-                        timePublished = null
-                    )
+    fun submitItem() = viewModelScope.launch(Dispatchers.IO) {
+        if (existingItemId.value == null) {
+            itemRepository.addItem(
+                Item(
+                    id = UUID.randomUUID().toString(),
+                    name = if (name.value == "") null else name.value,
+                    url = url.value,
+                    description = if (description.value == "") null else description.value,
+                    timeAdded = Clock.System.now(),
+                    timePublished = null
                 )
-            } else {
-                val existingItem = itemRepository.getItem(existingItemId).first()
+            )
+        } else {
+            existingItemId.value?.let {
+                val existingItem = itemRepository.getItem(it).first()
                 itemRepository.updateItem(
                     Item(
-                        id = existingItemId,
+                        id = it,
                         name = if (name.value == "") null else name.value,
                         url = url.value,
                         description = if (description.value == "") null else description.value,

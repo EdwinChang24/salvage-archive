@@ -4,23 +4,25 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
-import io.github.edwinchang24.salvage.feature.itemediting.edititem.editItemScreen
-import io.github.edwinchang24.salvage.feature.itemediting.newitem.newItemScreen
+import io.github.edwinchang24.salvage.feature.itemediting.startEditItemActivity
+import io.github.edwinchang24.salvage.feature.saved.navigation.SavedScreenNavigationRoute
+import io.github.edwinchang24.salvage.feature.saved.navigation.savedScreen
+import io.github.edwinchang24.salvage.feature.tags.navigation.tagsScreen
 
 @Composable
-fun SalvageNavHost(modifier: Modifier = Modifier) {
-    val rootNavController = rememberNavController()
+fun SalvageNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     NavHost(
-        navController = rootNavController,
-        startDestination = MainContentRoute,
+        navController = navController,
+        startDestination = SavedScreenNavigationRoute,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         modifier = modifier
     ) {
-        mainContent(rootNavController = rootNavController)
-        newItemScreen(onFinish = rootNavController::popBackStack)
-        editItemScreen(onFinish = rootNavController::popBackStack)
+        savedScreen(onEditItem = context::startEditItemActivity)
+        tagsScreen()
     }
 }

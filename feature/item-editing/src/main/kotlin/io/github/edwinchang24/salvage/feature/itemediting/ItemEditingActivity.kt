@@ -1,4 +1,4 @@
-package io.github.edwinchang24.salvage.feature.itemediting.newitem
+package io.github.edwinchang24.salvage.feature.itemediting
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,17 +8,18 @@ import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.edwinchang24.salvage.core.design.SalvageTheme
-import io.github.edwinchang24.salvage.feature.itemediting.ui.ItemEditingRoute
-import io.github.edwinchang24.salvage.feature.itemediting.ui.ItemEditingScreenViewModel
+
+const val ExistingItemId = "existingItemId"
 
 @AndroidEntryPoint
-class ShareTargetActivity : ComponentActivity() {
-
+class ItemEditingActivity : ComponentActivity() {
     private val itemEditingScreenViewModel: ItemEditingScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        val existingItemId = intent.extras?.getString(ExistingItemId)
+        if (existingItemId != null) itemEditingScreenViewModel.setExistingItemId(existingItemId)
         val sharedUrl = intent.extras?.getString(Intent.EXTRA_TEXT)
         if (sharedUrl != null) itemEditingScreenViewModel.onEditUrl(sharedUrl)
         setContent {

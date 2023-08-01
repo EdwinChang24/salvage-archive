@@ -15,10 +15,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.navigation.NavController
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import io.github.edwinchang24.salvage.feature.itemediting.newitem.navigateToNewItem
+import io.github.edwinchang24.salvage.feature.itemediting.startNewItemActivity
 import io.github.edwinchang24.salvage.navigation.TopLevelDestination
 import io.github.edwinchang24.salvage.navigation.isSelected
 import io.github.edwinchang24.salvage.navigation.navigateTo
@@ -26,16 +25,13 @@ import io.github.edwinchang24.salvage.navigation.selectedTopLevelDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainContent(
-    rootNavController: NavController,
-    content: @Composable (contentPadding: PaddingValues, mainNavController: NavHostController) -> Unit
-) {
-    val mainNavController = rememberNavController()
+fun MainContent(navController: NavHostController, content: @Composable (contentPadding: PaddingValues) -> Unit) {
+    val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(mainNavController.selectedTopLevelDestination()?.label ?: "Salvage") },
+                title = { Text(navController.selectedTopLevelDestination()?.label ?: "Salvage") },
                 scrollBehavior = scrollBehavior
             )
         },
@@ -43,11 +39,11 @@ fun MainContent(
             NavigationBar {
                 for (topLevelDestination in TopLevelDestination.entries) {
                     NavigationBarItem(
-                        selected = topLevelDestination.isSelected(mainNavController),
-                        onClick = { mainNavController.navigateTo(topLevelDestination) },
+                        selected = topLevelDestination.isSelected(navController),
+                        onClick = { navController.navigateTo(topLevelDestination) },
                         icon = {
                             Icon(
-                                if (topLevelDestination.isSelected(mainNavController)) topLevelDestination.selectedIcon
+                                if (topLevelDestination.isSelected(navController)) topLevelDestination.selectedIcon
                                 else topLevelDestination.unselectedIcon, contentDescription = null
                             )
                         },
@@ -57,11 +53,11 @@ fun MainContent(
             }
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = rootNavController::navigateToNewItem) {
+            FloatingActionButton(onClick = context::startNewItemActivity) {
                 Icon(Icons.Default.Add, contentDescription = "New item")
             }
         },
-        content = { paddingValues -> content(paddingValues, mainNavController) },
+        content = content,
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     )
 }

@@ -1,4 +1,4 @@
-package io.github.edwinchang24.salvage.feature.itemediting.ui
+package io.github.edwinchang24.salvage.feature.itemediting
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -48,20 +47,18 @@ fun ItemEditingRoute(
     onFinish: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ItemEditingScreenViewModel = hiltViewModel()
-) {
-    val name by viewModel.name.collectAsStateWithLifecycle()
-    val url by viewModel.url.collectAsStateWithLifecycle()
-    val description by viewModel.description.collectAsStateWithLifecycle()
-    ItemEditingScreen(
-        editingItem = viewModel.existingItemId != null,
-        name = GetterSetter(name, viewModel::onEditName),
-        url = GetterSetter(url, viewModel::onEditUrl),
-        description = GetterSetter(description, viewModel::onEditDescription),
-        onSubmitItem = viewModel::submitItem,
-        onFinish = onFinish,
-        modifier = modifier
-    )
-}
+) = ItemEditingScreen(
+    editingItem = viewModel.existingItemId.collectAsStateWithLifecycle().value != null,
+    name = GetterSetter(viewModel.name.collectAsStateWithLifecycle().value, viewModel::onEditName),
+    url = GetterSetter(viewModel.url.collectAsStateWithLifecycle().value, viewModel::onEditUrl),
+    description = GetterSetter(
+        viewModel.description.collectAsStateWithLifecycle().value,
+        viewModel::onEditDescription
+    ),
+    onSubmitItem = viewModel::submitItem,
+    onFinish = onFinish,
+    modifier = modifier
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
