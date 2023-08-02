@@ -13,14 +13,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalFoundationApi::class)
-fun LazyGridScope.tagList(state: TagListUiState, onTagClick: () -> Unit, onTagLongClick: () -> Unit) {
+fun LazyGridScope.tagList(
+    state: TagListUiState,
+    onTagClick: (tagId: String) -> Unit,
+    onTagLongClick: (tagId: String) -> Unit
+) {
     if (state is TagListUiState.Success) {
         items(items = state.list, key = { it.id }) { tag ->
             ListItem(
                 headlineContent = { Text(tag.name) },
                 supportingContent = tag.description?.let { { Text(it) } },
                 leadingContent = { Box(modifier = Modifier.background(Color(tag.color), shape = CircleShape)) },
-                modifier = Modifier.combinedClickable(onClick = onTagClick, onLongClick = onTagLongClick)
+                modifier = Modifier.combinedClickable(
+                    onClick = { onTagClick(tag.id) },
+                    onLongClick = { onTagLongClick(tag.id) }
+                )
             )
         }
     }

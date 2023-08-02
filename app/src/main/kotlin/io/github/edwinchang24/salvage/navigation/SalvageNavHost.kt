@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import io.github.edwinchang24.salvage.feature.itemediting.startEditItemActivity
 import io.github.edwinchang24.salvage.feature.saved.navigation.SavedScreenNavigationRoute
 import io.github.edwinchang24.salvage.feature.saved.navigation.savedScreen
+import io.github.edwinchang24.salvage.feature.tagediting.startEditTagActivity
 import io.github.edwinchang24.salvage.feature.tags.navigation.tagsScreen
 
 @Composable
@@ -23,6 +24,6 @@ fun SalvageNavHost(navController: NavHostController, modifier: Modifier = Modifi
         modifier = modifier
     ) {
         savedScreen(onEditItem = context::startEditItemActivity)
-        tagsScreen()
+        tagsScreen(onEditTag = context::startEditTagActivity)
     }
 }
