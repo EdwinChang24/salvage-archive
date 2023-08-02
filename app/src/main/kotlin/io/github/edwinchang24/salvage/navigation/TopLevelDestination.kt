@@ -18,6 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
 import io.github.edwinchang24.salvage.feature.itemediting.startNewItemActivity
 import io.github.edwinchang24.salvage.feature.saved.navigation.SavedScreenNavigationRoute
+import io.github.edwinchang24.salvage.feature.tagediting.startNewTagActivity
 import io.github.edwinchang24.salvage.feature.tags.navigation.TagsScreenNavigationRoute
 
 enum class TopLevelDestination(
@@ -43,8 +44,8 @@ enum class TopLevelDestination(
         unselectedIcon = Icons.Outlined.Tag,
         label = "Tags",
         route = TagsScreenNavigationRoute,
-        fabContent = {
-            FloatingActionButton(onClick = {}) {
+        fabContent = { context ->
+            FloatingActionButton(onClick = context::startNewTagActivity) {
                 Icon(Icons.Default.Add, contentDescription = "New tag")
             }
         }

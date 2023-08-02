@@ -31,6 +31,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":feature:saved"))
     implementation(project(":feature:item-editing"))
+    implementation(project(":feature:tag-editing"))
     implementation(project(":feature:tags"))
     implementation(libs.core.ktx)
     implementation(libs.core.splashscreen)

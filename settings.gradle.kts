@@ -30,4 +30,5 @@ include(":core:util")
 
 include(":feature:saved")
 include(":feature:item-editing")
+include(":feature:tag-editing")
 include(":feature:tags")
