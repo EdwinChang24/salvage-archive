@@ -57,7 +57,6 @@ fun NavHostController.navigateTo(topLevelDestination: TopLevelDestination) {
         topLevelDestination.route,
         navOptions = navOptions {
             popUpTo(graph.findStartDestination().id) {
-                inclusive = true
                 saveState = true
             }
             launchSingleTop = true
