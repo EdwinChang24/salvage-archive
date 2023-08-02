@@ -34,7 +34,9 @@ class TagEditingScreenViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val existingTag = tagRepository.getTag(id).firstOrNull()
             savedStateHandle[Name] = existingTag?.name ?: ""
-            savedStateHandle[Color] = existingTag?.color ?: DefaultColor.RED
+            savedStateHandle[Color] = existingTag?.color?.let { colorInt ->
+                DefaultColor.entries.firstOrNull { it.colorInt == colorInt }
+            } ?: DefaultColor.RED
             savedStateHandle[Description] = existingTag?.description ?: ""
         }
     }
