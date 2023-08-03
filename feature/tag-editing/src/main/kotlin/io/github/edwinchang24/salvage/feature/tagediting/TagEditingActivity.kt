@@ -15,8 +15,10 @@ class TagEditingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val existingTagId = intent.extras?.getString(ExistingTagId)
-        if (existingTagId != null) tagEditingScreenViewModel.setExistingTagId(existingTagId)
+        if (savedInstanceState == null) {
+            val existingTagId = intent.extras?.getString(ExistingTagId)
+            if (existingTagId != null) tagEditingScreenViewModel.setExistingTagId(existingTagId)
+        }
         setContent {
             SalvageTheme {
                 TagEditingRoute(onFinish = ::finish)

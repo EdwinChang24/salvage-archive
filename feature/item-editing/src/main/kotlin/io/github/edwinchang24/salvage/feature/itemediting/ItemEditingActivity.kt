@@ -18,10 +18,12 @@ class ItemEditingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val existingItemId = intent.extras?.getString(ExistingItemId)
-        if (existingItemId != null) itemEditingScreenViewModel.setExistingItemId(existingItemId)
-        val sharedUrl = intent.extras?.getString(Intent.EXTRA_TEXT)
-        if (sharedUrl != null) itemEditingScreenViewModel.onEditUrl(sharedUrl)
+        if (savedInstanceState == null) {
+            val existingItemId = intent.extras?.getString(ExistingItemId)
+            if (existingItemId != null) itemEditingScreenViewModel.setExistingItemId(existingItemId)
+            val sharedUrl = intent.extras?.getString(Intent.EXTRA_TEXT)
+            if (sharedUrl != null) itemEditingScreenViewModel.onEditUrl(sharedUrl)
+        }
         setContent {
             SalvageTheme {
                 ItemEditingRoute(onFinish = { finish() }, viewModel = itemEditingScreenViewModel)
