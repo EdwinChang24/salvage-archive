@@ -26,7 +26,7 @@ class TagEditingScreenViewModel @Inject constructor(
 ) : ViewModel() {
     val existingTagId: StateFlow<String?> = savedStateHandle.getStateFlow(ExistingTagId, null)
     val name = savedStateHandle.getStateFlow(Name, "")
-    val color = savedStateHandle.getStateFlow(Color, DefaultColor.RED)
+    val color = savedStateHandle.getStateFlow(Color, DefaultColor.RED.colorInt)
     val description = savedStateHandle.getStateFlow(Description, "")
 
     fun setExistingTagId(id: String) {
@@ -34,9 +34,7 @@ class TagEditingScreenViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val existingTag = tagRepository.getTag(id).firstOrNull()
             savedStateHandle[Name] = existingTag?.name ?: ""
-            savedStateHandle[Color] = existingTag?.color?.let { colorInt ->
-                DefaultColor.entries.firstOrNull { it.colorInt == colorInt }
-            } ?: DefaultColor.RED
+            savedStateHandle[Color] = existingTag?.color ?: DefaultColor.RED.colorInt
             savedStateHandle[Description] = existingTag?.description ?: ""
         }
     }
@@ -45,7 +43,7 @@ class TagEditingScreenViewModel @Inject constructor(
         savedStateHandle[Name] = name
     }
 
-    fun onEditColor(color: DefaultColor) {
+    fun onEditColor(color: Int) {
         savedStateHandle[Color] = color
     }
 
@@ -59,7 +57,7 @@ class TagEditingScreenViewModel @Inject constructor(
                 Tag(
                     id = UUID.randomUUID().toString(),
                     name = name.value,
-                    color = color.value.colorInt,
+                    color = color.value,
                     description = description.value.ifEmpty { null }
                 )
             )
@@ -70,7 +68,7 @@ class TagEditingScreenViewModel @Inject constructor(
                     Tag(
                         id = existingTag.id,
                         name = name.value,
-                        color = color.value.colorInt,
+                        color = color.value,
                         description = description.value.ifEmpty { null }
                     )
                 )

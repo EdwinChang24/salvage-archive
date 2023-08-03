@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -28,6 +30,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -73,7 +76,7 @@ fun TagEditingRoute(
 fun TagEditingScreen(
     editingTag: Boolean,
     name: GetterSetter<String>,
-    color: GetterSetter<DefaultColor>,
+    color: GetterSetter<Int>,
     description: GetterSetter<String>,
     onSubmitTag: () -> Unit,
     onFinish: () -> Unit,
@@ -131,19 +134,29 @@ private fun NameField(name: GetterSetter<String>) {
 }
 
 @Composable
-private fun ColorPicker(color: GetterSetter<DefaultColor>) {
-    LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        items(DefaultColor.entries) {
+private fun ColorPicker(color: GetterSetter<Int>) {
+    val state = rememberLazyListState(
+        initialFirstVisibleItemIndex = DefaultColor.entries.indexOfFirst { it.colorInt == color() }
+    )
+    LazyRow(state = state, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        items(DefaultColor.entries.map { it.colorInt }) {
             val selected = color() == it
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
-                    .background(it.colorInt.toColorOpaque())
+                    .background(it.toColorOpaque())
                     .clickable { color.setValue(it) }
             ) {
-                if (selected) Icon(Icons.Default.Check, contentDescription = null)
+                if (selected) {
+                    Spacer(
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
+                            .fillMaxSize()
+                    )
+                    Icon(Icons.Default.Check, contentDescription = null)
+                }
             }
         }
     }
@@ -190,7 +203,7 @@ private fun TagEditingScreenPreview() = SalvageTheme {
     TagEditingScreen(
         editingTag = true,
         name = +remember { mutableStateOf("") },
-        color = +remember { mutableStateOf(DefaultColor.RED) },
+        color = +remember { mutableStateOf(DefaultColor.RED.colorInt) },
         description = +remember { mutableStateOf("") },
         onSubmitTag = {},
         onFinish = {}
