@@ -121,7 +121,8 @@ private fun NameField(name: GetterSetter<String>, modifier: Modifier = Modifier)
     OutlinedTextField(
         value = name(),
         onValueChange = name.setValue,
-        label = { Text("Name") },
+        label = { Text("Name*") },
+        supportingText = { Text("*required") },
         isError = name().isEmpty(),
         singleLine = true,
         keyboardOptions = KeyboardOptions(
