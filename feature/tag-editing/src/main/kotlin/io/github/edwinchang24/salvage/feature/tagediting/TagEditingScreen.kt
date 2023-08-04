@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,7 +29,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -42,6 +40,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
@@ -49,8 +48,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.edwinchang24.salvage.core.design.SalvageTheme
 import io.github.edwinchang24.salvage.core.preview.annotations.AllPreviews
+import io.github.edwinchang24.salvage.core.ui.tags.TagColor
 import io.github.edwinchang24.salvage.core.util.GetterSetter
-import io.github.edwinchang24.salvage.core.util.toColorOpaque
+import io.github.edwinchang24.salvage.core.util.adjusted
 import io.github.edwinchang24.salvage.core.util.unaryPlus
 
 @Composable
@@ -107,18 +107,17 @@ fun TagEditingScreen(
             verticalArrangement = Arrangement.spacedBy(24.dp),
             modifier = modifier
                 .padding(contentPadding)
-                .padding(horizontal = 24.dp)
                 .verticalScroll(scrollState)
         ) {
-            NameField(name = name)
+            NameField(name = name, modifier = Modifier.padding(horizontal = 24.dp))
             ColorPicker(color = color)
-            DescriptionField(description = description)
+            DescriptionField(description = description, modifier = Modifier.padding(horizontal = 24.dp))
         }
     }
 }
 
 @Composable
-private fun NameField(name: GetterSetter<String>) {
+private fun NameField(name: GetterSetter<String>, modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = name(),
         onValueChange = name.setValue,
@@ -129,41 +128,36 @@ private fun NameField(name: GetterSetter<String>) {
             capitalization = KeyboardCapitalization.Words,
             imeAction = ImeAction.Next
         ),
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     )
 }
 
 @Composable
-private fun ColorPicker(color: GetterSetter<Int>) {
+private fun ColorPicker(color: GetterSetter<Int>, modifier: Modifier = Modifier) {
     val state = rememberLazyListState(
-        initialFirstVisibleItemIndex = DefaultColor.entries.indexOfFirst { it.colorInt == color() }
+        initialFirstVisibleItemIndex = TagColor.entries.indexOfFirst { it.colorInt == color() }
     )
-    LazyRow(state = state, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        items(DefaultColor.entries.map { it.colorInt }) {
+    LazyRow(state = state, horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = modifier) {
+        item { Spacer(modifier = Modifier.size(12.dp)) }
+        items(TagColor.entries.map { it.colorInt }) {
             val selected = color() == it
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
-                    .background(it.toColorOpaque())
+                    .background(Color(it).adjusted())
                     .clickable { color.setValue(it) }
             ) {
-                if (selected) {
-                    Spacer(
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
-                            .fillMaxSize()
-                    )
-                    Icon(Icons.Default.Check, contentDescription = null)
-                }
+                if (selected) Icon(Icons.Default.Check, contentDescription = null)
             }
         }
+        item { Spacer(modifier = Modifier.size(12.dp)) }
     }
 }
 
 @Composable
-private fun DescriptionField(description: GetterSetter<String>) {
+private fun DescriptionField(description: GetterSetter<String>, modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = description(),
         onValueChange = description.setValue,
@@ -180,7 +174,7 @@ private fun DescriptionField(description: GetterSetter<String>) {
             capitalization = KeyboardCapitalization.Sentences,
             imeAction = ImeAction.Done
         ),
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     )
 }
 
@@ -203,7 +197,7 @@ private fun TagEditingScreenPreview() = SalvageTheme {
     TagEditingScreen(
         editingTag = true,
         name = +remember { mutableStateOf("") },
-        color = +remember { mutableStateOf(DefaultColor.RED.colorInt) },
+        color = +remember { mutableStateOf(TagColor.RED.colorInt) },
         description = +remember { mutableStateOf("") },
         onSubmitTag = {},
         onFinish = {}

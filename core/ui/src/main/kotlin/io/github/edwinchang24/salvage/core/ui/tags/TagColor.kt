@@ -1,6 +1,7 @@
-package io.github.edwinchang24.salvage.feature.tagediting
+package io.github.edwinchang24.salvage.core.ui.tags
 
-enum class DefaultColor(val colorInt: Int) {
+@Suppress("unused")
+enum class TagColor(val colorInt: Int) {
     RED(0xff0000),
     ORANGE(0xff8000),
     YELLOW(0xffff00),

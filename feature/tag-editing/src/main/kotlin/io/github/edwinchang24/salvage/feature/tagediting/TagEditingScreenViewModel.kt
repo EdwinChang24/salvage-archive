@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.edwinchang24.salvage.core.data.repository.TagRepository
 import io.github.edwinchang24.salvage.core.model.Tag
+import io.github.edwinchang24.salvage.core.ui.tags.TagColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -26,7 +27,7 @@ class TagEditingScreenViewModel @Inject constructor(
 ) : ViewModel() {
     val existingTagId: StateFlow<String?> = savedStateHandle.getStateFlow(ExistingTagId, null)
     val name = savedStateHandle.getStateFlow(Name, "")
-    val color = savedStateHandle.getStateFlow(Color, DefaultColor.RED.colorInt)
+    val color = savedStateHandle.getStateFlow(Color, TagColor.RED.colorInt)
     val description = savedStateHandle.getStateFlow(Description, "")
 
     fun setExistingTagId(id: String) {
@@ -34,7 +35,7 @@ class TagEditingScreenViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val existingTag = tagRepository.getTag(id).firstOrNull()
             savedStateHandle[Name] = existingTag?.name ?: ""
-            savedStateHandle[Color] = existingTag?.color ?: DefaultColor.RED.colorInt
+            savedStateHandle[Color] = existingTag?.color ?: TagColor.RED.colorInt
             savedStateHandle[Description] = existingTag?.description ?: ""
         }
     }

@@ -13,6 +13,7 @@ android {
 dependencies {
     implementation(libs.browser)
     implementation(libs.core.ktx)
+    implementation(libs.compose.material3)
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui.graphics)
     implementation(libs.kotlinx.datetime)
