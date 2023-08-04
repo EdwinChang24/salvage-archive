@@ -1,12 +1,14 @@
 package io.github.edwinchang24.salvage.feature.tags
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -61,7 +63,9 @@ fun TagsScreen(
             )
         }
     } else {
-        Text("Loading...", modifier = modifier)
+        Box(contentAlignment = Alignment.Center, modifier = modifier.fillMaxSize()) {
+            CircularProgressIndicator()
+        }
     }
 }
 
