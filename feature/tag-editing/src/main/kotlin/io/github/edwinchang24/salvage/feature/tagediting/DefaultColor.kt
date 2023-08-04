@@ -9,7 +9,5 @@ enum class DefaultColor(val colorInt: Int) {
     AQUA(0x00ffff),
     BLUE(0x0000ff),
     FUCHSIA(0xff00ff),
-    PURPLE(0x800080),
-    WHITE(0xffffff),
-    BLACK(0x000000)
+    PURPLE(0x800080)
 }
