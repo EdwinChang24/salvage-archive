@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -47,8 +48,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.edwinchang24.salvage.core.design.SalvageTheme
+import io.github.edwinchang24.salvage.core.model.Tag
 import io.github.edwinchang24.salvage.core.preview.annotations.AllPreviews
 import io.github.edwinchang24.salvage.core.ui.tags.TagColor
+import io.github.edwinchang24.salvage.core.ui.tags.TagPill
 import io.github.edwinchang24.salvage.core.util.GetterSetter
 import io.github.edwinchang24.salvage.core.util.adjusted
 import io.github.edwinchang24.salvage.core.util.unaryPlus
@@ -106,13 +109,23 @@ fun TagEditingScreen(
         Column(
             verticalArrangement = Arrangement.spacedBy(24.dp),
             modifier = modifier
+                .fillMaxSize()
                 .padding(contentPadding)
+                .padding(vertical = 24.dp)
                 .verticalScroll(scrollState)
         ) {
+            TagPreview(name(), color(), modifier = Modifier.fillMaxWidth())
             NameField(name = name, modifier = Modifier.padding(horizontal = 24.dp))
             ColorPicker(color = color)
             DescriptionField(description = description, modifier = Modifier.padding(horizontal = 24.dp))
         }
+    }
+}
+
+@Composable
+fun TagPreview(name: String, color: Int, modifier: Modifier = Modifier) {
+    Box(contentAlignment = Alignment.Center, modifier = modifier) {
+        TagPill(tag = Tag(id = "", name = name.ifEmpty { "Preview" }, color = color, description = null))
     }
 }
 
